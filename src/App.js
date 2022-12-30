@@ -1,10 +1,11 @@
-import ReactDiffViewer from 'react-diff-viewer';
 import React, { useState } from "react";
-import { Button, Input, Col, Row } from 'antd';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import ReactDiffViewer from 'react-diff-viewer';
 
-const { TextArea } = Input;
 
-function App() {
+
+export default function App() {
   const onChangeOld = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     updateOldCode(e.target.value)
   };
@@ -13,15 +14,20 @@ function App() {
   };
   const [oldCode, updateOldCode] = useState('');
   const [newCode, updateNewCode] = useState('');
-
   return (
     <>
-      <TextArea onChange={onChangeOld} rows={20} />
-      <TextArea onChange={onChangeNew} rows={20} />
-      {/* <Button type="primary">Primary Button</Button> */}
-      <ReactDiffViewer oldValue={oldCode} newValue={newCode} splitView={true} />
-    </>
+    <Box
+      component="form"
+      sx={{
+        '& > :not(style)': { m: 10, width: '50ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField id="outlined-textarea" label="old" variant="outlined" multiline onChange={onChangeOld} />
+      <TextField id="outlined-textarea" label="new" variant="outlined" multiline onChange={onChangeNew} />
+    </Box>
+      <ReactDiffViewer oldValue={oldCode} newValue={newCode} splitView={true} /> 
+      </>
   );
 }
-
-export default App;
